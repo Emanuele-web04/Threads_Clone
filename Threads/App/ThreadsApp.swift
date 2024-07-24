@@ -11,7 +11,8 @@ import SwiftUI
 struct ThreadsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ThreadsTabView()
+                .preferredColorScheme(.dark)
         }
     }
 }

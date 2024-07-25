@@ -11,7 +11,7 @@ struct ThreadCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                CircularProfileView()
+                CircularProfileView(user: nil, size: .s)
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text("maxverstappen1")

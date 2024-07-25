@@ -37,9 +37,9 @@ struct FeedView: View {
             .safeAreaInset(edge: .top) {
                 HStack {
                     NavigationLink {
-                        ProfileView()
+                        CurrentUserProfileView()
                     } label: {
-                        CircularProfileView()
+                        CircularProfileView(user: nil, size: .s)
                     }.buttonStyle(.plain)
                     
                     Spacer(minLength: 0)

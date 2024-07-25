@@ -8,35 +8,42 @@
 import SwiftUI
 
 struct UserCell: View {
+    
+    let user: User
+    
     var body: some View {
         HStack {
-           CircularProfileView()
+            CircularProfileView(user: user, size: .s)
             
             VStack(alignment: .leading) {
-                Text("maxverstappen1")
+                Text(user.fullname)
                     
                     .fontWeight(.semibold)
-                Text("Max Verstappen")
+                Text("@" + "\(user.username)").foregroundStyle(.gray)
                     
                     .multilineTextAlignment(.center)
-            }.font(.footnote)
+            }.font(.subheadline)
             
             Spacer()
             
             Text("Follow")
-                .font(.subheadline)
+                .font(.footnote)
                 .fontWeight(.semibold)
-                .frame(width: 100, height: 32)
+                .frame(width: 90, height: 32)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 50)
                         .stroke(Color(.systemGray4), lineWidth: 1)
                 }
             
         }
         .padding(.horizontal)
+        .padding(.vertical, 5)
     }
 }
 
-#Preview {
-    UserCell()
+
+struct UserCell_Previews: PreviewProvider {
+    static var previews: some View {
+        UserCell(user: dev.user)
+    } 
 }

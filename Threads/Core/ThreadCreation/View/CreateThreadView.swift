@@ -16,7 +16,7 @@ struct CreateThreadView: View {
         NavigationStack {
             VStack {
                 HStack() {
-                    CircularProfileView()
+                    CircularProfileView(user: nil, size: .l)
                     
                     TextField("What's happening?", text: $newPost, axis: .vertical)
                 }

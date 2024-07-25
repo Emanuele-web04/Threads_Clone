@@ -9,8 +9,6 @@ import SwiftUI
 
 struct RegistrationView: View {
     
-    
-    
     @Environment(\.dismiss) var dismiss
     
     @StateObject var vm = RegistrationViewModel()
@@ -25,10 +23,16 @@ struct RegistrationView: View {
                     .textInputAutocapitalization(.never)
                     .modifier(ThreadsTextFieldModifier())
                 SecureField("Enter your password", text: $vm.password)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .modifier(ThreadsTextFieldModifier())
                 TextField("Enter your full name", text: $vm.fullname)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .modifier(ThreadsTextFieldModifier())
                 TextField("Enter your username", text: $vm.username)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .modifier(ThreadsTextFieldModifier())
                 
                 Spacer()

@@ -36,6 +36,17 @@
 		C015E8AB2C51DF870039AD51 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8AA2C51DF870039AD51 /* AuthService.swift */; };
 		C015E8AF2C51E49F0039AD51 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8AE2C51E49F0039AD51 /* MainViewModel.swift */; };
 		C015E8B12C51F1420039AD51 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8B02C51F1420039AD51 /* LoginViewModel.swift */; };
+		C015E8B32C52976D0039AD51 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8B22C52976D0039AD51 /* User.swift */; };
+		C015E8B62C529A9D0039AD51 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8B52C529A9C0039AD51 /* UserService.swift */; };
+		C015E8B92C529FB40039AD51 /* CurrentProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8B82C529FB40039AD51 /* CurrentProfileViewModel.swift */; };
+		C015E8BC2C52A6F50039AD51 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8BB2C52A6F50039AD51 /* ExploreViewModel.swift */; };
+		C015E8BE2C52A88A0039AD51 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8BD2C52A88A0039AD51 /* PreviewProvider.swift */; };
+		C015E8C22C52AEFC0039AD51 /* CurrentUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8C12C52AEFC0039AD51 /* CurrentUserProfileView.swift */; };
+		C015E8C62C52B7B00039AD51 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8C52C52B7B00039AD51 /* ProfileHeaderView.swift */; };
+		C015E8C82C52B9E20039AD51 /* UserContentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8C72C52B9E20039AD51 /* UserContentListView.swift */; };
+		C015E8CB2C52DE1E0039AD51 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */; };
+		C015E8CD2C52E20F0039AD51 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */; };
+		C015E8D02C52F6700039AD51 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C015E8CF2C52F6700039AD51 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +76,16 @@
 		C015E8AA2C51DF870039AD51 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C015E8AE2C51E49F0039AD51 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		C015E8B02C51F1420039AD51 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		C015E8B22C52976D0039AD51 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C015E8B52C529A9C0039AD51 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		C015E8B82C529FB40039AD51 /* CurrentProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentProfileViewModel.swift; sourceTree = "<group>"; };
+		C015E8BB2C52A6F50039AD51 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
+		C015E8BD2C52A88A0039AD51 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
+		C015E8C12C52AEFC0039AD51 /* CurrentUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserProfileView.swift; sourceTree = "<group>"; };
+		C015E8C52C52B7B00039AD51 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		C015E8C72C52B9E20039AD51 /* UserContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentListView.swift; sourceTree = "<group>"; };
+		C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +97,7 @@
 				C015E8A52C51D2BD0039AD51 /* FirebaseStorage in Frameworks */,
 				C015E8A12C51D2BD0039AD51 /* FirebaseFirestore in Frameworks */,
 				C015E8A32C51D2BD0039AD51 /* FirebaseFirestoreSwift in Frameworks */,
+				C015E8D02C52F6700039AD51 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +126,7 @@
 				C015E8572C507E650039AD51 /* App */,
 				C015E8582C507EF00039AD51 /* Core */,
 				C015E85D2C507F2A0039AD51 /* Utilities */,
+				C015E8B42C529A870039AD51 /* Services */,
 				C015E85B2C507F210039AD51 /* Model */,
 				C015E8592C507F0A0039AD51 /* Extensions */,
 				C015E84D2C507C7B0039AD51 /* Assets.xcassets */,
@@ -150,6 +173,7 @@
 		C015E8592C507F0A0039AD51 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8BD2C52A88A0039AD51 /* PreviewProvider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -157,6 +181,7 @@
 		C015E85B2C507F210039AD51 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8B22C52976D0039AD51 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +265,7 @@
 		C015E8752C508E5D0039AD51 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8BA2C52A6E90039AD51 /* ViewModel */,
 				C015E8762C508E620039AD51 /* View */,
 			);
 			path = Explore;
@@ -313,8 +339,11 @@
 		C015E88C2C514B870039AD51 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8C42C52B7A40039AD51 /* Components */,
+				C015E8BF2C52AED90039AD51 /* CurrentUserProfile */,
 				C015E85C2C507F250039AD51 /* Services */,
 				C015E8932C5162970039AD51 /* EditProfile */,
+				C015E8B72C529FA70039AD51 /* ViewModel */,
 				C015E8902C51556E0039AD51 /* Model */,
 				C015E88D2C514B8C0039AD51 /* View */,
 			);
@@ -340,6 +369,7 @@
 		C015E8932C5162970039AD51 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8C92C52DE100039AD51 /* EditProfileViewModel */,
 				C015E8942C51629B0039AD51 /* View */,
 			);
 			path = EditProfile;
@@ -402,6 +432,72 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C015E8B42C529A870039AD51 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8B52C529A9C0039AD51 /* UserService.swift */,
+				C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C015E8B72C529FA70039AD51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C015E8BA2C52A6E90039AD51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8BB2C52A6F50039AD51 /* ExploreViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C015E8BF2C52AED90039AD51 /* CurrentUserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8C32C52AF750039AD51 /* ViewModel */,
+				C015E8C02C52AEF20039AD51 /* View */,
+			);
+			path = CurrentUserProfile;
+			sourceTree = "<group>";
+		};
+		C015E8C02C52AEF20039AD51 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8C12C52AEFC0039AD51 /* CurrentUserProfileView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C015E8C32C52AF750039AD51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8B82C529FB40039AD51 /* CurrentProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C015E8C42C52B7A40039AD51 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8C52C52B7B00039AD51 /* ProfileHeaderView.swift */,
+				C015E8C72C52B9E20039AD51 /* UserContentListView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C015E8C92C52DE100039AD51 /* EditProfileViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */,
+			);
+			path = EditProfileViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -423,6 +519,7 @@
 				C015E8A02C51D2BD0039AD51 /* FirebaseFirestore */,
 				C015E8A22C51D2BD0039AD51 /* FirebaseFirestoreSwift */,
 				C015E8A42C51D2BD0039AD51 /* FirebaseStorage */,
+				C015E8CF2C52F6700039AD51 /* Kingfisher */,
 			);
 			productName = Threads;
 			productReference = C015E8462C507C7B0039AD51 /* Threads.app */;
@@ -454,6 +551,7 @@
 			mainGroup = C015E83D2C507C7B0039AD51;
 			packageReferences = (
 				C015E89D2C51D2BD0039AD51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C015E8CE2C52F6700039AD51 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C015E8472C507C7B0039AD51 /* Products */;
 			projectDirPath = "";
@@ -489,21 +587,31 @@
 				C015E8A92C51DEF60039AD51 /* RegistrationViewModel.swift in Sources */,
 				C015E84C2C507C7B0039AD51 /* MainView.swift in Sources */,
 				C015E8922C5155840039AD51 /* ProfileThreadFilter.swift in Sources */,
+				C015E8BE2C52A88A0039AD51 /* PreviewProvider.swift in Sources */,
 				C015E8862C5090000039AD51 /* ThreadCell.swift in Sources */,
+				C015E8BC2C52A6F50039AD51 /* ExploreViewModel.swift in Sources */,
 				C015E8AB2C51DF870039AD51 /* AuthService.swift in Sources */,
 				C015E8802C508ED40039AD51 /* ActivityView.swift in Sources */,
 				C015E8702C5089BA0039AD51 /* ThreadsTabView.swift in Sources */,
+				C015E8CD2C52E20F0039AD51 /* ImageUploader.swift in Sources */,
+				C015E8CB2C52DE1E0039AD51 /* EditProfileViewModel.swift in Sources */,
 				C015E88B2C5148D50039AD51 /* UserCell.swift in Sources */,
 				C015E88F2C514B970039AD51 /* ProfileView.swift in Sources */,
+				C015E8C62C52B7B00039AD51 /* ProfileHeaderView.swift in Sources */,
 				C015E86D2C50886C0039AD51 /* ThreadsTextFieldModifier.swift in Sources */,
+				C015E8B92C529FB40039AD51 /* CurrentProfileViewModel.swift in Sources */,
+				C015E8C22C52AEFC0039AD51 /* CurrentUserProfileView.swift in Sources */,
 				C015E8842C508EFD0039AD51 /* MessageView.swift in Sources */,
 				C015E8AF2C51E49F0039AD51 /* MainViewModel.swift in Sources */,
 				C015E89A2C5183F00039AD51 /* CreateThreadView.swift in Sources */,
 				C015E87C2C508EA40039AD51 /* CommunityView.swift in Sources */,
 				C015E84A2C507C7B0039AD51 /* ThreadsApp.swift in Sources */,
 				C015E8782C508E6C0039AD51 /* ExploreView.swift in Sources */,
+				C015E8B62C529A9D0039AD51 /* UserService.swift in Sources */,
 				C015E8892C5146E40039AD51 /* CircularProfileView.swift in Sources */,
+				C015E8C82C52B9E20039AD51 /* UserContentListView.swift in Sources */,
 				C015E86A2C5087660039AD51 /* RegistrationView.swift in Sources */,
+				C015E8B32C52976D0039AD51 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +827,14 @@
 				minimumVersion = 10.29.0;
 			};
 		};
+		C015E8CE2C52F6700039AD51 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -741,6 +857,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C015E89D2C51D2BD0039AD51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		C015E8CF2C52F6700039AD51 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C015E8CE2C52F6700039AD51 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

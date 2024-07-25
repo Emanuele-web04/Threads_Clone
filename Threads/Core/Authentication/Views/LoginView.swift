@@ -23,6 +23,7 @@ struct LoginView: View {
                         .textInputAutocapitalization(.never)
                         .modifier(ThreadsTextFieldModifier())
                     SecureField("Enter your password", text: $vm.password)
+                        .textInputAutocapitalization(.never)
                         .modifier(ThreadsTextFieldModifier())
                 }
                 

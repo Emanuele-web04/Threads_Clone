@@ -11,8 +11,7 @@ struct ThreadCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                Image(systemName: "person").frame(width: 40, height: 40).clipShape(Circle()).background { Circle().fill(.gray)}
-                
+                CircularProfileView()
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text("maxverstappen1")
@@ -70,7 +69,7 @@ struct ThreadCell: View {
                         Button {
                             
                         } label: {
-                            Image(systemName: "paperplane").imageScale(.small)
+                            Image(systemName: "arrow.up.circle").imageScale(.small)
                         }
                         
                     }.foregroundStyle(.gray).padding(.vertical, 10)

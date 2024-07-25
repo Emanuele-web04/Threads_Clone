@@ -38,7 +38,8 @@ struct ThreadsTabView: View {
                     Image(systemName: selection == 4 ? "tray.fill" : "tray")
                         .environment(\.symbolVariants, selection == 4 ? .fill : .none)
                 }.tag(4)
-        }.tint(.white)
+        }
+        .tint(.white)
             .background(.thinMaterial)
     }
 }

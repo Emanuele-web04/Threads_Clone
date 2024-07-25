@@ -12,7 +12,7 @@ struct ThreadsTextFieldModifier: ViewModifier {
         content
             .font(.subheadline)
             .padding(12)
-            .background(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 0.75))
+            .background(RoundedRectangle(cornerRadius: 50).stroke(.white, lineWidth: 0.5))
     }
 }
 

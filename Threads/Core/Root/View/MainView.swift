@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @StateObject var vm = MainViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("So does it work?")
+        Group {
+            if vm.userSession != nil {
+                ThreadsTabView()
+            } else {
+                LoginView()
+            }
         }
-        .padding()
     }
 }
 

@@ -9,31 +9,33 @@ import SwiftUI
 
 struct RegistrationView: View {
     
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var fullName: String = ""
-    @State private var username: String = ""
+    
     
     @Environment(\.dismiss) var dismiss
     
+    @StateObject var vm = RegistrationViewModel()
+    
     var body: some View {
-        VStack(spacing: 30) {
+        VStack(spacing: 40) {
             Spacer()
-            Image("x-twitter").resizable().scaledToFill().frame(width: 70, height: 70)
+            Image("x-twitter").resizable().scaledToFill().frame(width: 50, height: 50)
             VStack(spacing: 20) {
-                TextField("Enter your email", text: $email)
+                TextField("Enter your email", text: $vm.email)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .modifier(ThreadsTextFieldModifier())
-                SecureField("Enter your password", text: $password)
+                SecureField("Enter your password", text: $vm.password)
                     .modifier(ThreadsTextFieldModifier())
-                TextField("Enter your full name", text: $fullName)
+                TextField("Enter your full name", text: $vm.fullname)
                     .modifier(ThreadsTextFieldModifier())
-                TextField("Enter your username", text: $username)
+                TextField("Enter your username", text: $vm.username)
                     .modifier(ThreadsTextFieldModifier())
                 
+                Spacer()
                 Button {
-                    
+                    Task {
+                        try await vm.createUser()
+                    }
                 } label: {
                     Text("Sign up")
                         .font(.footnote)
@@ -41,7 +43,7 @@ struct RegistrationView: View {
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(.accent).cornerRadius(8)
+                        .background(.accent).cornerRadius(50)
                 }
                 
             }

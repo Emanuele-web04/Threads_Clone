@@ -9,16 +9,22 @@ import SwiftUI
 
 struct CreateThreadView: View {
     
-    @State private var newPost = ""
+    @State private var caption = ""
     @Environment(\.dismiss) var dismiss
+    
+    @StateObject var vm = CreateThreadViewModel()
+    
+    private var user: User? {
+        return UserService.shared.currentUser
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack() {
-                    CircularProfileView(user: nil, size: .l)
+                    CircularProfileView(user: user, size: .m)
                     
-                    TextField("What's happening?", text: $newPost, axis: .vertical)
+                    TextField("What's happening?", text: $caption, axis: .vertical)
                 }
                 Spacer()
             }
@@ -32,7 +38,10 @@ struct CreateThreadView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                      
+                        Task {
+                            try await vm.uploadThread(caption)
+                            dismiss()
+                        }
                     } label: {
                         Text("Post")
                         .fontWeight(.semibold)
@@ -40,14 +49,16 @@ struct CreateThreadView: View {
                         .foregroundStyle(.white)
                         .padding(.vertical, 5)
                         .padding(.horizontal, 15)
-                        .background(RoundedRectangle(cornerRadius: 50).fill(.xBlue.opacity(newPost.isEmpty ? 0.5 : 1)))
-                    }.disabled(newPost.isEmpty)
+                        .background(RoundedRectangle(cornerRadius: 50).fill(.xBlue.opacity(caption.isEmpty ? 0.5 : 1)))
+                    }.disabled(caption.isEmpty)
                 }
             }
         }
     }
 }
 
-#Preview {
-    CreateThreadView()
+struct CreateThreadView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateThreadView()
+    }
 }

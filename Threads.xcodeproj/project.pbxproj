@@ -47,6 +47,9 @@
 		C015E8CB2C52DE1E0039AD51 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */; };
 		C015E8CD2C52E20F0039AD51 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */; };
 		C015E8D02C52F6700039AD51 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C015E8CF2C52F6700039AD51 /* Kingfisher */; };
+		C015E8D22C52F79A0039AD51 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8D12C52F79A0039AD51 /* Thread.swift */; };
+		C015E8D52C52F8BB0039AD51 /* CreateThreadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8D42C52F8BB0039AD51 /* CreateThreadViewModel.swift */; };
+		C015E8D72C52F8D30039AD51 /* ThreadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E8D62C52F8D30039AD51 /* ThreadService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +89,9 @@
 		C015E8C72C52B9E20039AD51 /* UserContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentListView.swift; sourceTree = "<group>"; };
 		C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
+		C015E8D12C52F79A0039AD51 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
+		C015E8D42C52F8BB0039AD51 /* CreateThreadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadViewModel.swift; sourceTree = "<group>"; };
+		C015E8D62C52F8D30039AD51 /* ThreadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				C015E8B22C52976D0039AD51 /* User.swift */,
+				C015E8D12C52F79A0039AD51 /* Thread.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -386,6 +393,7 @@
 		C015E8972C5183D50039AD51 /* ThreadCreation */ = {
 			isa = PBXGroup;
 			children = (
+				C015E8D32C52F8810039AD51 /* ViewModel */,
 				C015E8982C5183E20039AD51 /* View */,
 			);
 			path = ThreadCreation;
@@ -437,6 +445,7 @@
 			children = (
 				C015E8B52C529A9C0039AD51 /* UserService.swift */,
 				C015E8CC2C52E20F0039AD51 /* ImageUploader.swift */,
+				C015E8D62C52F8D30039AD51 /* ThreadService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -496,6 +505,14 @@
 				C015E8CA2C52DE1E0039AD51 /* EditProfileViewModel.swift */,
 			);
 			path = EditProfileViewModel;
+			sourceTree = "<group>";
+		};
+		C015E8D32C52F8810039AD51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C015E8D42C52F8BB0039AD51 /* CreateThreadViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,15 +601,18 @@
 				C015E8962C5162A50039AD51 /* EditProfileView.swift in Sources */,
 				C015E8B12C51F1420039AD51 /* LoginViewModel.swift in Sources */,
 				C015E8622C507FA40039AD51 /* LoginView.swift in Sources */,
+				C015E8D52C52F8BB0039AD51 /* CreateThreadViewModel.swift in Sources */,
 				C015E8A92C51DEF60039AD51 /* RegistrationViewModel.swift in Sources */,
 				C015E84C2C507C7B0039AD51 /* MainView.swift in Sources */,
 				C015E8922C5155840039AD51 /* ProfileThreadFilter.swift in Sources */,
 				C015E8BE2C52A88A0039AD51 /* PreviewProvider.swift in Sources */,
+				C015E8D72C52F8D30039AD51 /* ThreadService.swift in Sources */,
 				C015E8862C5090000039AD51 /* ThreadCell.swift in Sources */,
 				C015E8BC2C52A6F50039AD51 /* ExploreViewModel.swift in Sources */,
 				C015E8AB2C51DF870039AD51 /* AuthService.swift in Sources */,
 				C015E8802C508ED40039AD51 /* ActivityView.swift in Sources */,
 				C015E8702C5089BA0039AD51 /* ThreadsTabView.swift in Sources */,
+				C015E8D22C52F79A0039AD51 /* Thread.swift in Sources */,
 				C015E8CD2C52E20F0039AD51 /* ImageUploader.swift in Sources */,
 				C015E8CB2C52DE1E0039AD51 /* EditProfileViewModel.swift in Sources */,
 				C015E88B2C5148D50039AD51 /* UserCell.swift in Sources */,

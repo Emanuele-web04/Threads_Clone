@@ -14,7 +14,10 @@ struct Thread: Identifiable, Codable {
     let ownerUid: String // pointer to the user that holds the thread
     let caption: String
     let timestamp: Timestamp
-    var likes: Int
+    var likedIDs: [String] = []
+    var likes: Int {
+        likedIDs.count
+    }
     var bookmark: Bool
     
     var id: String {

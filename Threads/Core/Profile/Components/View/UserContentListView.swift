@@ -54,7 +54,17 @@ struct UserContentListView: View {
             
             LazyVStack {
                 ForEach(vm.threads) { thread in
-                  ThreadCell(thread: thread)
+                  ThreadCell(thread: thread) { updatedPost in
+                      if let index = vm.threads.firstIndex(where: { thread in
+                          thread.threadID == updatedPost.threadID
+                      }) {
+                          vm.threads[index].likedIDs = updatedPost.likedIDs
+                      }
+                  } onDelete: {
+                      withAnimation() {
+                          vm.threads.removeAll { thread.threadID == $0.threadID }
+                      }
+                  }
                 }
             }
         }.padding(.vertical, 8)

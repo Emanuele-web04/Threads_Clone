@@ -42,4 +42,9 @@ class EditProfileViewModel: ObservableObject {
         guard let imageURL = try? await ImageUploader.uploadImage(image) else { return }
         try await UserService.shared.updateUserProfileImage(withImageURL: imageURL)
     }
+    
+    @MainActor
+    func updateVerificationStatus(withVerified isVerified: Bool) async throws {
+        try await UserService.shared.updateVerifiedState(withVerified: isVerified)
+    }
 }

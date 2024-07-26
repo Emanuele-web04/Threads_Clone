@@ -25,12 +25,22 @@ struct ProfileHeaderView<Content: View>: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         CircularProfileView(user: user, size: .xl)
-                        Text(user?.fullname ?? "")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text("@" + "\(user?.username ?? "")")
-                            .foregroundStyle(.gray)
-                            .font(.subheadline)
+                        if let user {
+                            HStack {
+                                Text(user.fullname)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                if user.isVerified {
+                                    Image(systemName: "checkmark.seal.fill")
+                                        .foregroundStyle(.white, .xBlue).imageScale(.medium)
+                                }
+                            }
+                            Text("@" + "\(user.username)")
+                                .foregroundStyle(.gray)
+                                .font(.subheadline)
+                        } else {
+                            ProgressView()
+                        }
                     }
                     Spacer()
                     button

@@ -12,7 +12,7 @@ struct EditProfileView: View {
     
     @State private var bio = ""
     @State private var link = ""
-    @State private var isPrivateProfile = false
+    @State private var isVerified = false
     
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = EditProfileViewModel()
@@ -21,78 +21,81 @@ struct EditProfileView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                
-                PhotosPicker(selection: $vm.selectedItem) {
-                    if let image = vm.profileImage {
-                        VStack(spacing: 10) {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 64, height: 64)
-                                .clipShape(Circle())
-                            textButtonProfileImage
+            ZStack(alignment: .top) {
+                Rectangle().frame(height: 0.5).foregroundStyle(.gray.opacity(0.3))
+                VStack(spacing: 60) {
+                    PhotosPicker(selection: $vm.selectedItem) {
+                        if let image = vm.profileImage {
+                            VStack(spacing: 10) {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
+                                textButtonProfileImage
+                            }
+                        } else {
+                            VStack(spacing: 10) {
+                                CircularProfileView(user: user, size: .l)
+                                    .foregroundStyle(.white)
+                                textButtonProfileImage
+                            }
                         }
-                    } else {
-                        VStack(spacing: 10) {
-                            CircularProfileView(user: user, size: .l)
-                                .foregroundStyle(.white)
-                            textButtonProfileImage
+                    }.padding(.top)
+                    
+                    VStack(spacing: 20) {
+                        Divider()
+                        HStack() {
+                            HStack(spacing: 40) {
+                                Text("Name")
+                                    .frame(width: 60, alignment: .leading)
+                                    .fontWeight(.semibold)
+                                Text(user.fullname).foregroundStyle(.xBlue)
+                            }
+                            Spacer()
                         }
-                    }
-                }
-                Spacer()
-                VStack(spacing: 20) {
-                    HStack() {
+                        Divider()
+                        
                         HStack(spacing: 40) {
-                            Text("Name")
-                                .frame(width: 50, alignment: .leading)
+                            Text("Bio")
+                                .frame(width: 60, alignment: .leading)
                                 .fontWeight(.semibold)
-                            Text(user.fullname).foregroundStyle(.xBlue)
+                            TextField("Add a bio to your profile", text: $bio, axis: .vertical)
+                        }.frame(height: 60, alignment: .top)
+                        
+                        
+                        Divider()
+                        
+                        HStack(spacing: 40) {
+                            Text("Website")
+                                .frame(width: 60, alignment: .leading)
+                                .fontWeight(.semibold)
+                            TextField("Add link", text: $link)
                         }
-                        Spacer()
-                    }
-                    Divider()
+                        
+                        Divider()
+                        
+                        Toggle(isOn: $isVerified) {
+                            Text("Verified Account")
+                                .fontWeight(.semibold)
+                        }.tint(.xBlue)
+                        
+                    }.padding()
+                        .font(.subheadline)
                     
-                    HStack(spacing: 40) {
-                        Text("Bio")
-                            .frame(width: 50, alignment: .leading)
-                            .fontWeight(.semibold)
-                        TextField("Enter your Bio", text: $bio, axis: .vertical)
-                    }
-                    
-                    
-                    Divider()
-                    
-                    HStack(spacing: 40) {
-                        Text("Link")
-                            .frame(width: 50, alignment: .leading)
-                            .fontWeight(.semibold)
-                        TextField("Add link", text: $link)
-                    }
-                    
-                    
-                    Divider()
-                    
-                    Toggle("Private Profile", isOn: $isPrivateProfile)
-                    
-                }.padding()
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(.systemGray4))
                 }
-                Spacer()
             }
-            .padding()
+            Spacer()
+            
             .font(.footnote)
             .onAppear {
                 if let userBio = user.bio, let userLink = user.link {
                     bio = userBio
                     link = userLink
+                    isVerified = user.isVerified
+                    print(isVerified)
                 }
             }
-            
-            
             .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -106,6 +109,7 @@ struct EditProfileView: View {
                     Button("Done") {
                         Task {
                             try await vm.updateUserData(withBio: bio, link: link)
+                            try await vm.updateVerificationStatus(withVerified: isVerified)
                             dismiss()
                         }
                     }

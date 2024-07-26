@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseStorage
 import FirebaseFirestoreSwift
 
 class AuthService {
@@ -55,5 +56,20 @@ class AuthService {
         guard let userData = try? Firestore.Encoder().encode(user) else { return }
         try await Firestore.firestore().collection("users").document(id).setData(userData)
         UserService.shared.currentUser = user
+    }
+    
+    private func deleteAccount() async throws {
+        // first of all you need to delete the pf image of the user from database
+        // so you retrieve the user id and take the image of the user
+        guard let userUid = Auth.auth().currentUser?.uid else { return }
+        //retrieve the image from userid
+        let ref = Storage.storage().reference().child("profile_images").child(userUid)
+        try await ref.delete()
+        // deleting firestore user document
+        try await Firestore.firestore().collection("users").document(userUid).delete()
+        // deleting auth account and setting user session to nil
+        try await Auth.auth().currentUser?.delete()
+        self.userSession = nil
+        UserService.shared.reset() // sets current user object to nil
     }
 }

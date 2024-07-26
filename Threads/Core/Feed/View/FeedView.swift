@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct FeedView: View {
     
@@ -13,6 +14,8 @@ struct FeedView: View {
     @State private var createThread = false
     
     @StateObject var vm = FeedViewModel()
+    
+    @AppStorage("migration_state") var migrationState: Int = 0
     
     private var user: User? {
         return UserService.shared.currentUser
@@ -22,10 +25,10 @@ struct FeedView: View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 GeometryReader { geometry in
-                                    Color.clear
-                                        .preference(key: OffsetKey.self, value: geometry.frame(in: .global).minY)
-                                }
-                                .frame(height: 0)
+                    Color.clear
+                        .preference(key: OffsetKey.self, value: geometry.frame(in: .global).minY)
+                }
+                .frame(height: 0)
                 LazyVStack {
                     ForEach(vm.threads) { thread in
                         NavigationLink {
@@ -33,7 +36,17 @@ struct FeedView: View {
                                 ProfileView(user: user)
                             }
                         } label: {
-                            ThreadCell(thread: thread)
+                            ThreadCell(thread: thread) { updatedPost in
+                                if let index = vm.threads.firstIndex(where: { thread in
+                                    thread.threadID == updatedPost.threadID
+                                }) {
+                                    vm.threads[index].likedIDs = updatedPost.likedIDs
+                                }
+                            } onDelete: {
+                                withAnimation() {
+                                    vm.threads.removeAll { thread.threadID == $0.threadID }
+                                }
+                            }
                         }
                     }
                 }
@@ -45,6 +58,12 @@ struct FeedView: View {
                 Task { try await vm.fetchThreads() }
             }
             .toolbarBackground(.clear)
+            .onAppear(perform: {
+                if migrationState == 0 {
+                    migrateUserToAddIsVerified()
+                }
+                print("\(migrationState)")
+            })
             .safeAreaInset(edge: .top) {
                 HStack {
                     NavigationLink {
@@ -61,14 +80,14 @@ struct FeedView: View {
                             .padding(.trailing, 40)
                     }
                     Spacer()
-                }.padding()                
+                }.padding()
                     .background(.black)
                     .overlay(alignment: .bottom) {
                         Rectangle().frame(width: 400, height: 0.5).foregroundStyle(.gray.opacity(0.3))
                     }
             }
             .overlay(alignment: .bottomTrailing) {
-
+                
                 Button {
                     createThread = true
                 } label: {
@@ -87,6 +106,37 @@ struct FeedView: View {
                                 Task { try await vm.fetchThreads() }
                             })
                     }
+            }
+        }
+    }
+    func migrateUserToAddIsVerified() {
+        let db = Firestore.firestore()
+        db.collection("users").getDocuments { (snapshot, error) in
+            guard let documents = snapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            
+            let group = DispatchGroup()
+            
+            for document in documents {
+                group.enter()
+                db.collection("users").document(document.documentID).updateData([
+                    "isVerified": false
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                    group.leave()
+                }
+            }
+            
+            group.notify(queue: .main) {
+                // Aggiorna lo stato di migrazione solo dopo che tutte le operazioni sono completate
+                print("updated")
+                migrationState = 1
             }
         }
     }

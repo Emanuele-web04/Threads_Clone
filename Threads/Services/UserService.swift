@@ -65,4 +65,11 @@ class UserService {
         try await Firestore.firestore().collection("users").document(currentUid).updateData(["link" : link])
         self.currentUser?.link = link
     }
+    
+    @MainActor
+    func updateVerifiedState(withVerified isVerified: Bool) async throws {
+        // fetch the current user id
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        try await Firestore.firestore().collection("users").document(uid).updateData([ "isVerified" : isVerified ])
+    }
 }

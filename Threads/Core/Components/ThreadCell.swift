@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct ThreadCell: View {
+    
+    let thread: Thread
+    
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                CircularProfileView(user: nil, size: .s)
+                CircularProfileView(user: thread.user, size: .s)
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
-                        Text("maxverstappen1")
-                            .font(.footnote)
+                        Text(thread.user?.fullname ?? "")
+                            .font(.subheadline)
                             .fontWeight(.semibold)
                         Text("•").padding(.bottom, 3)
                             .foregroundStyle(Color(.systemGray2))
-                        Text("10m")
-                            .font(.caption)
+                        Text(thread.timestamp.toString())
+                            .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                         Spacer()
                         Button {
@@ -31,9 +34,9 @@ struct ThreadCell: View {
                         }
                     }
                     
-                    Text("Formula 1 champion")
+                    Text(thread.caption)
                         .font(.subheadline)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.leading)
                     
                     HStack {
                         Button {
@@ -81,6 +84,6 @@ struct ThreadCell: View {
     }
 }
 
-#Preview {
-    ThreadCell()
-}
+//#Preview {
+//    ThreadCell()
+//}

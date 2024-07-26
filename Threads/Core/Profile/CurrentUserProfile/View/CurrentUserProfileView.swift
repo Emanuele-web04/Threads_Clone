@@ -17,40 +17,55 @@ struct CurrentUserProfileView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                //bio
-                VStack(spacing: 20) {
-                    ProfileHeaderView(user: currentUser) {
-                        Button {
-                            showEditProfile.toggle()
-                        } label: {
-                            Text("Edit Profile")
-                                .font(.footnote)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: 90)
-                                .padding(6)
-                                .background(RoundedRectangle(cornerRadius: 50).stroke(.gray, lineWidth: 0.5))
+            ZStack(alignment: .top) {
+                Rectangle()
+                    .fill(.xBlue)
+                    .frame(height: 116)
+                    .ignoresSafeArea()
+                
+                ScrollView(showsIndicators: false) {
+                    //bio
+                    VStack(spacing: 20) {
+                        ProfileHeaderView(user: currentUser) {
+                            Button {
+                                showEditProfile.toggle()
+                            } label: {
+                                Text("Edit Profile")
+                                    .font(.footnote)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                                    .frame(maxWidth: 90)
+                                    .padding(6)
+                                    .background(RoundedRectangle(cornerRadius: 50).stroke(.gray, lineWidth: 0.5))
+                            }
+                        }
+                        if let user = currentUser {
+                            UserContentListView(user: user)
+                        } else {
+                            ProgressView()
                         }
                     }
-                    UserContentListView()
-                }
-            }.padding(.horizontal, 10)
-                .sheet(isPresented: $showEditProfile, content: {
-                    if let user = currentUser {
-                        EditProfileView(user: user).presentationBackground(.black)
-                    }
-                })
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            AuthService.shared.signOut()
-                        } label: {
-                            Image(systemName: "arrow.right.to.line.alt").imageScale(.small).padding(10).foregroundStyle(.red)
-                                .background(Circle().stroke(Color(.red)))
+                }.padding(10)
+                    .padding(.top, 15)
+                    .sheet(isPresented: $showEditProfile, content: {
+                        if let user = currentUser {
+                            EditProfileView(user: user).presentationBackground(.black)
                         }
-                    }
-                }
+                    })
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Menu {
+                                Button(role: .destructive) {
+                                    AuthService.shared.signOut()
+                                } label: {
+                                    Label("Logout", systemImage: "arrow.right.to.line.alt")
+                                }
+                            } label: {
+                                Image(systemName: "ellipsis").rotationEffect(.degrees(90)).imageScale(.medium)
+                            }
+                        }
+                    }.zIndex(4)
+            }
         }
     }
 }

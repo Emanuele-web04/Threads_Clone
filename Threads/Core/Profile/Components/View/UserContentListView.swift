@@ -16,6 +16,11 @@ struct UserContentListView: View {
         return UIScreen.main.bounds.width / count - 20
     }
     
+    @StateObject var vm: UserContentListViewModel
+    
+    init(user: User) {
+        self._vm = StateObject(wrappedValue: UserContentListViewModel(user: user))
+    }
     
     var body: some View {
         VStack {
@@ -27,7 +32,7 @@ struct UserContentListView: View {
                             .fontWeight(.medium)
                             .foregroundStyle(selectedFilter == filter ? .white : .gray)
                         
-                        ScrollView(.horizontal) {
+                    
                             if selectedFilter == filter {
                                 Rectangle()
                                     .foregroundStyle(.xBlue)
@@ -37,7 +42,7 @@ struct UserContentListView: View {
                                     .foregroundStyle(.clear)
                                     .frame(width: filterBarWidth, height: 2)
                             }
-                        }
+                        
                     }
                     .onTapGesture {
                         withAnimation(.spring()) {
@@ -48,14 +53,14 @@ struct UserContentListView: View {
             }
             
             LazyVStack {
-                ForEach(0 ... 10, id: \.self) { thread in
-                    ThreadCell()
+                ForEach(vm.threads) { thread in
+                  ThreadCell(thread: thread)
                 }
             }
         }.padding(.vertical, 8)
     }
 }
 
-#Preview {
-    UserContentListView()
-}
+//#Preview {
+//    UserContentListView()
+//}

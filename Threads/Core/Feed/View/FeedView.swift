@@ -12,6 +12,12 @@ struct FeedView: View {
     @State private var offset: CGFloat = 0
     @State private var createThread = false
     
+    @StateObject var vm = FeedViewModel()
+    
+    private var user: User? {
+        return UserService.shared.currentUser
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -21,9 +27,14 @@ struct FeedView: View {
                                 }
                                 .frame(height: 0)
                 LazyVStack {
-                    ForEach(0 ... 10, id: \.self) { thread in
-                        ThreadCell()
-                        
+                    ForEach(vm.threads) { thread in
+                        NavigationLink {
+                            if let user = thread.user {
+                                ProfileView(user: user)
+                            }
+                        } label: {
+                            ThreadCell(thread: thread)
+                        }
                     }
                 }
             }
@@ -31,7 +42,7 @@ struct FeedView: View {
                 self.offset = value
             }
             .refreshable {
-                
+                Task { try await vm.fetchThreads() }
             }
             .toolbarBackground(.clear)
             .safeAreaInset(edge: .top) {
@@ -39,15 +50,19 @@ struct FeedView: View {
                     NavigationLink {
                         CurrentUserProfileView()
                     } label: {
-                        CircularProfileView(user: nil, size: .s)
+                        CircularProfileView(user: user, size: .s)
                     }.buttonStyle(.plain)
                     
                     Spacer(minLength: 0)
-                    Image("x-twitter").resizable().scaledToFill().frame(width: 20, height: 20)
-                        .padding(.trailing, 40)
+                    Button {
+                        Task { try await vm.fetchThreads() }
+                    } label: {
+                        Image("x-twitter").resizable().scaledToFill().frame(width: 20, height: 20)
+                            .padding(.trailing, 40)
+                    }
                     Spacer()
                 }.padding()                
-                    .background((offset > -100) ? .bar : .regularMaterial)
+                    .background(.black)
                     .overlay(alignment: .bottom) {
                         Rectangle().frame(width: 400, height: 0.5).foregroundStyle(.gray.opacity(0.3))
                     }
@@ -68,6 +83,9 @@ struct FeedView: View {
                 }.padding()
                     .fullScreenCover(isPresented: $createThread) {
                         CreateThreadView()
+                            .onDisappear(perform: {
+                                Task { try await vm.fetchThreads() }
+                            })
                     }
             }
         }

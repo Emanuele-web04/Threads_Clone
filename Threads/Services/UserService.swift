@@ -29,6 +29,11 @@ class UserService {
         self.currentUser = user
     }
     
+    static func fethUser(withUid uid: String) async throws -> User {
+        let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+        return try snapshot.data(as: User.self)
+    }
+    
     static func fetchUsers() async throws -> [User] {
         guard let currentUid = Auth.auth().currentUser?.uid else { return [] }
         let snapshot = try await Firestore.firestore().collection("users").getDocuments()
@@ -45,5 +50,19 @@ class UserService {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         try await Firestore.firestore().collection("users").document(currentUid).updateData([ "profileImageUrl" : imageURL ])
         self.currentUser?.profileImageUrl = imageURL
+    }
+    
+    @MainActor
+    func updateUserBio(withBio bio: String) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        try await Firestore.firestore().collection("users").document(currentUid).updateData(["bio" : bio])
+        self.currentUser?.bio = bio
+    }
+    
+    @MainActor
+    func updateUserLink(withLink link: String) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        try await Firestore.firestore().collection("users").document(currentUid).updateData(["link" : link])
+        self.currentUser?.link = link
     }
 }

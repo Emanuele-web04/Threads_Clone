@@ -33,10 +33,9 @@ struct ProfileView: View {
                     }
                 }
                 
-                UserContentListView()
+                UserContentListView(user: user)
             }
         }.padding(.horizontal, 10)
-            .navigationBarTitleDisplayMode(.inline)
     }
     
 }

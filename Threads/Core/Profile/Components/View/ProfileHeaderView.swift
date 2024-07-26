@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ProfileHeaderView<Content: View>: View {
     
     var user: User?
@@ -26,7 +24,7 @@ struct ProfileHeaderView<Content: View>: View {
                 HStack {
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        CircularProfileView(user: user, size: .m)
+                        CircularProfileView(user: user, size: .xl)
                         Text(user?.fullname ?? "")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -37,10 +35,18 @@ struct ProfileHeaderView<Content: View>: View {
                     Spacer()
                     button
                 }
-                
-                if let bio = user?.bio {
-                    Text(bio)
-                        .font(.footnote)
+                VStack(alignment: .leading, spacing: 8) {
+                    if let bio = user?.bio {
+                        Text(bio)
+                            .font(.subheadline)
+                    }
+                    if let link = user?.link, let validURL = URL(string: link) {
+                        Link(destination: validURL, label: {
+                            Text(link)
+                                .font(.subheadline)
+                                .foregroundStyle(.xBlue)
+                        })
+                    }
                 }
                 HStack(spacing: 10) {
                     HStack(spacing: 3) {

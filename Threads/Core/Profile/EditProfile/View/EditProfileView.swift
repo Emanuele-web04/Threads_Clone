@@ -85,7 +85,12 @@ struct EditProfileView: View {
             }
             .padding()
             .font(.footnote)
-            
+            .onAppear {
+                if let userBio = user.bio, let userLink = user.link {
+                    bio = userBio
+                    link = userLink
+                }
+            }
             
             
             .navigationTitle("Edit Profile")
@@ -100,7 +105,7 @@ struct EditProfileView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
                         Task {
-                            try await vm.updateUserData()
+                            try await vm.updateUserData(withBio: bio, link: link)
                             dismiss()
                         }
                     }

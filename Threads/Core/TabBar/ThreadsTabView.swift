@@ -10,10 +10,14 @@ import SwiftUI
 struct ThreadsTabView: View {
     
     @State var selection: Int = 0
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         TabView(selection: $selection) {
             FeedView()
+                .onTapGesture {
+                    dismiss()
+                }
                 .tabItem {
                     Image(systemName: selection == 0 ? "house.fill" : "house")
                         .environment(\.symbolVariants, selection == 0 ? .fill : .none)

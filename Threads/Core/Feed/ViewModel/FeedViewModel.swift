@@ -5,7 +5,7 @@
 //  Created by Emanuele Di Pietro on 25/07/24.
 //
 
-import Foundation
+import Firebase
 
 @MainActor
 class FeedViewModel: ObservableObject {

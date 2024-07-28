@@ -18,7 +18,7 @@ struct Thread: Identifiable, Codable {
     var likes: Int {
         likedIDs.count
     }
-    var bookmark: Bool
+    var bookmarkIDs: [String] = []
     
     var id: String {
         return threadID ?? UUID().uuidString

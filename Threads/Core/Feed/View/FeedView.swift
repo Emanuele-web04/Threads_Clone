@@ -38,6 +38,7 @@ struct FeedView: View {
                                 thread.threadID == updatedPost.threadID
                             }) {
                                 vm.threads[index].likedIDs = updatedPost.likedIDs
+                                vm.threads[index].bookmarkIDs = updatedPost.bookmarkIDs
                             }
                         } onDelete: {
                             withAnimation() {
@@ -59,6 +60,8 @@ struct FeedView: View {
             .onAppear(perform: {
                 if migrationState == 0 {
                     migrateUserToAddIsVerified()
+                } else if migrationState == 1 {
+                    updateThreadBookmarkType()
                 }
             })
             .safeAreaInset(edge: .top) {
@@ -105,6 +108,7 @@ struct FeedView: View {
             }
         }
     }
+    
     func migrateUserToAddIsVerified() {
         let db = Firestore.firestore()
         db.collection("users").getDocuments { (snapshot, error) in
@@ -133,6 +137,38 @@ struct FeedView: View {
                 // Aggiorna lo stato di migrazione solo dopo che tutte le operazioni sono completate
                 print("updated")
                 migrationState = 1
+            }
+        }
+    }
+    
+    func updateThreadBookmarkType() {
+        let db = Firestore.firestore()
+        db.collection("threads").getDocuments { (snapshot, error) in
+            guard let documents = snapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            
+            let group = DispatchGroup()
+            
+            for document in documents {
+                group.enter()
+                db.collection("threads").document(document.documentID).updateData([
+                    "bookmarkIDs" : []
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                    group.leave()
+                }
+            }
+            
+            group.notify(queue: .main) {
+                // Aggiorna lo stato di migrazione solo dopo che tutte le operazioni sono completate
+                print("updated")
+                migrationState = 2
             }
         }
     }

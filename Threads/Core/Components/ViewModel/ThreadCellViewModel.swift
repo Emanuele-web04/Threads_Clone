@@ -24,4 +24,19 @@ class ThreadCellViewModel: ObservableObject {
                 ])
             }
     }
+    
+    func bookmarkThread(_ thread: Thread) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let threadID = thread.threadID else { return }
+        
+        if thread.bookmarkIDs.contains(uid) {
+            try await Firestore.firestore().collection("threads").document(threadID).updateData([
+                "bookmarkIDs" : FieldValue.arrayRemove([uid])
+            ])
+        } else {
+            try await Firestore.firestore().collection("threads").document(threadID).updateData([
+                "bookmarkIDs" : FieldValue.arrayUnion([uid])
+            ])
+        }
+    }
 }

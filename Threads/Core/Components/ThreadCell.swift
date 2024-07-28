@@ -96,7 +96,7 @@ struct ThreadCell: View {
                                             .foregroundStyle(thread.likedIDs.contains(uid) ? .red : .gray)
                                         Text("\(thread.likes)").font(.footnote)
                                     }
-                                
+                                 
                             }
                         }
                         Spacer()
@@ -107,9 +107,15 @@ struct ThreadCell: View {
                         }
                         Spacer()
                         Button {
-                            
+                            Task {
+                                try await vm.bookmarkThread(thread)
+                            }
                         } label: {
-                            Image(systemName: "bookmark").resizable().frame(width: 10, height: 13)
+                            if let uid = UserService.shared.currentUser?.id {
+                                Image(systemName: thread.bookmarkIDs.contains(uid) ? "bookmark.fill" : "bookmark")
+                                    .resizable().frame(width: 10, height: 13)
+                                    .foregroundStyle(thread.bookmarkIDs.contains(uid) ? .xBlue : .gray)
+                            }
                         }
                         Spacer()
                         Button {

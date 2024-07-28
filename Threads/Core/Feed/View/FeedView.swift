@@ -15,6 +15,8 @@ struct FeedView: View {
     
     @StateObject var vm = FeedViewModel()
     
+    @State private var showRefresh = false
+    
     @AppStorage("migration_state") var migrationState: Int = 0
     
     private var user: User? {
@@ -31,26 +33,22 @@ struct FeedView: View {
                 .frame(height: 0)
                 LazyVStack {
                     ForEach(vm.threads) { thread in
-                        NavigationLink {
-                            if let user = thread.user {
-                                ProfileView(user: user)
+                        ThreadCell(thread: thread, user: user) { updatedPost in
+                            if let index = vm.threads.firstIndex(where: { thread in
+                                thread.threadID == updatedPost.threadID
+                            }) {
+                                vm.threads[index].likedIDs = updatedPost.likedIDs
                             }
-                        } label: {
-                            ThreadCell(thread: thread) { updatedPost in
-                                if let index = vm.threads.firstIndex(where: { thread in
-                                    thread.threadID == updatedPost.threadID
-                                }) {
-                                    vm.threads[index].likedIDs = updatedPost.likedIDs
-                                }
-                            } onDelete: {
-                                withAnimation() {
-                                    vm.threads.removeAll { thread.threadID == $0.threadID }
-                                }
+                        } onDelete: {
+                            withAnimation() {
+                                vm.threads.removeAll { thread.threadID == $0.threadID }
                             }
                         }
                     }
+                    
                 }
             }
+            
             .onPreferenceChange(OffsetKey.self) { value in
                 self.offset = value
             }
@@ -62,7 +60,6 @@ struct FeedView: View {
                 if migrationState == 0 {
                     migrateUserToAddIsVerified()
                 }
-                print("\(migrationState)")
             })
             .safeAreaInset(edge: .top) {
                 HStack {
@@ -87,7 +84,6 @@ struct FeedView: View {
                     }
             }
             .overlay(alignment: .bottomTrailing) {
-                
                 Button {
                     createThread = true
                 } label: {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct UserContentListView: View {
     
@@ -17,9 +18,11 @@ struct UserContentListView: View {
     }
     
     @StateObject var vm: UserContentListViewModel
+    let user: User
     
     init(user: User) {
         self._vm = StateObject(wrappedValue: UserContentListViewModel(user: user))
+        self.user = user
     }
     
     var body: some View {
@@ -32,16 +35,16 @@ struct UserContentListView: View {
                             .fontWeight(.medium)
                             .foregroundStyle(selectedFilter == filter ? .white : .gray)
                         
-                    
-                            if selectedFilter == filter {
-                                Rectangle()
-                                    .foregroundStyle(.xBlue)
-                                    .frame(width: filterBarWidth, height: 2).matchedGeometryEffect(id: "item", in: animation)
-                            } else {
-                                Rectangle()
-                                    .foregroundStyle(.clear)
-                                    .frame(width: filterBarWidth, height: 2)
-                            }
+                        
+                        if selectedFilter == filter {
+                            Rectangle()
+                                .foregroundStyle(.xBlue)
+                                .frame(width: filterBarWidth, height: 2).matchedGeometryEffect(id: "item", in: animation)
+                        } else {
+                            Rectangle()
+                                .foregroundStyle(.clear)
+                                .frame(width: filterBarWidth, height: 2)
+                        }
                         
                     }
                     .onTapGesture {
@@ -53,21 +56,45 @@ struct UserContentListView: View {
             }
             
             LazyVStack {
-                ForEach(vm.threads) { thread in
-                  ThreadCell(thread: thread) { updatedPost in
-                      if let index = vm.threads.firstIndex(where: { thread in
-                          thread.threadID == updatedPost.threadID
-                      }) {
-                          vm.threads[index].likedIDs = updatedPost.likedIDs
-                      }
-                  } onDelete: {
-                      withAnimation() {
-                          vm.threads.removeAll { thread.threadID == $0.threadID }
-                      }
-                  }
+                ForEach(selectedFilter == .threads ? vm.threads : vm.currentUserLikedThreads) { thread in
+                    ThreadCell(thread: thread, user: user) { updatedPost in
+                        updateLikeThread(withUpdatedPost: updatedPost)
+                    } onDelete: {
+                        withAnimation() {
+                            switch selectedFilter {
+                            case .threads:
+                                vm.threads.removeAll { thread.threadID == $0.threadID }
+                            case .likes:
+                                vm.currentUserLikedThreads.removeAll { thread.threadID == $0.threadID }
+                            }
+                        }
+                    }
                 }
             }
         }.padding(.vertical, 8)
+    }
+    
+    private func updateLikeThread(withUpdatedPost updatedPost: Thread) {
+        switch selectedFilter {
+        case .threads:
+            if let index = vm.threads.firstIndex(where: { thread in
+                thread.threadID == updatedPost.threadID
+            }) {
+                vm.threads[index].likedIDs = updatedPost.likedIDs
+            }
+        case .likes:
+            if let index = vm.currentUserLikedThreads.firstIndex(where: { thread in
+                thread.threadID == updatedPost.threadID
+            }) {
+                vm.currentUserLikedThreads[index].likedIDs = updatedPost.likedIDs
+                // if the liked list no longer contains the user id then remove it
+                if !updatedPost.likedIDs.contains(user.id) {
+                    withAnimation(.spring()) {
+                        vm.currentUserLikedThreads.remove(at: index)
+                    }
+                }
+            }
+        }
     }
 }
 

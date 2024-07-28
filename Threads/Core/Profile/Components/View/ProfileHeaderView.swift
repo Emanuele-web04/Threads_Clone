@@ -25,6 +25,7 @@ struct ProfileHeaderView<Content: View>: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         CircularProfileView(user: user, size: .xl)
+                        
                         if let user {
                             HStack {
                                 Text(user.fullname)

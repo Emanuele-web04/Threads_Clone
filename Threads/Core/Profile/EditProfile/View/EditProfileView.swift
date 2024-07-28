@@ -80,6 +80,8 @@ struct EditProfileView: View {
                                 .fontWeight(.semibold)
                         }.tint(.xBlue)
                         
+                        Divider()
+                        
                     }.padding()
                         .font(.subheadline)
                     

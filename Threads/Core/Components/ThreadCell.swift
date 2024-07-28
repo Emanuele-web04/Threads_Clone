@@ -14,9 +14,7 @@ struct ThreadCell: View {
     let thread: Thread
     @StateObject var vm = ThreadCellViewModel()
     
-    private var user: User? {
-        UserService.shared.currentUser
-    }
+    let user: User?
     
     var onUpdate: (Thread) -> ()
     var onDelete: () -> ()
@@ -26,7 +24,17 @@ struct ThreadCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                CircularProfileView(user: thread.user, size: .s)
+                if thread.ownerUid != user?.id {
+                    NavigationLink {
+                        if let user = thread.user {
+                            ProfileView(user: user)
+                        }
+                    } label: {
+                        CircularProfileView(user: thread.user, size: .s)
+                    }
+                } else {
+                    CircularProfileView(user: thread.user, size: .s)
+                }
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(thread.user?.fullname ?? "")
@@ -44,8 +52,16 @@ struct ThreadCell: View {
                             .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                         Spacer()
-                        Button {
-                            
+                        Menu {
+                            if thread.ownerUid == user?.id {
+                                Button(role: .destructive) {
+                                    Task {
+                                        try await ThreadService.deleteThread(thread)
+                                    }
+                                } label: {
+                                    Label("Delete Post", systemImage: "trash")
+                                }
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundStyle(Color(.darkGray))
@@ -75,11 +91,12 @@ struct ThreadCell: View {
                             }
                         } label: {
                             HStack {
-                                if let uid = user?.id {
-                                    Image(systemName: thread.likedIDs.contains(uid) ? "heart.fill" : "heart").imageScale(.small)
-                                        .foregroundStyle(thread.likedIDs.contains(uid) ? .red : .gray)
-                                    Text("\(thread.likes)").font(.footnote)
-                                }
+                                if let uid = UserService.shared.currentUser?.id {
+                                        Image(systemName: thread.likedIDs.contains(uid) ? "heart.fill" : "heart").imageScale(.small)
+                                            .foregroundStyle(thread.likedIDs.contains(uid) ? .red : .gray)
+                                        Text("\(thread.likes)").font(.footnote)
+                                    }
+                                
                             }
                         }
                         Spacer()
@@ -124,11 +141,21 @@ struct ThreadCell: View {
                     })
                 }
             }
+            .onDisappear {
+                if let docListener {
+                    docListener.remove()
+                    self.docListener = nil
+                }
+            }
     }
 }
 
-//struct ThreadCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ThreadCell(thread: dev.thread)
-//    }
-//}
+struct ThreadCell_Previews: PreviewProvider {
+    static var previews: some View {
+        ThreadCell(thread: dev.thread, user: dev.user) { _ in
+            
+        } onDelete: {
+            
+        }
+    }
+}

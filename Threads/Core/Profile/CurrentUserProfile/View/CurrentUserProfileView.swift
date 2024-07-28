@@ -40,7 +40,7 @@ struct CurrentUserProfileView: View {
                             }
                         }
                         if let user = currentUser {
-                            UserContentListView(user: user)
+                           UserContentListView(user: user)
                         } else {
                             ProgressView()
                         }
@@ -60,11 +60,18 @@ struct CurrentUserProfileView: View {
                                 } label: {
                                     Label("Logout", systemImage: "arrow.right.to.line.alt")
                                 }
+                                Button(role: .destructive) {
+                                    Task {
+                                       try await AuthService.shared.deleteAccount()
+                                    }
+                                } label: {
+                                    Label("Delete Account", systemImage: "xmark.bin")
+                                }
                             } label: {
                                 Image(systemName: "ellipsis").rotationEffect(.degrees(90)).imageScale(.medium)
                             }
                         }
-                    }.zIndex(4)
+                    }
             }
         }
     }

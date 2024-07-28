@@ -71,5 +71,6 @@ class UserService {
         // fetch the current user id
         guard let uid = Auth.auth().currentUser?.uid else { return }
         try await Firestore.firestore().collection("users").document(uid).updateData([ "isVerified" : isVerified ])
+        self.currentUser?.isVerified = isVerified
     }
 }

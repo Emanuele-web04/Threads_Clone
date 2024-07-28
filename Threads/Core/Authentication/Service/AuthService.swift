@@ -58,7 +58,8 @@ class AuthService {
         UserService.shared.currentUser = user
     }
     
-    private func deleteAccount() async throws {
+    @MainActor
+    func deleteAccount() async throws {
         // first of all you need to delete the pf image of the user from database
         // so you retrieve the user id and take the image of the user
         guard let userUid = Auth.auth().currentUser?.uid else { return }

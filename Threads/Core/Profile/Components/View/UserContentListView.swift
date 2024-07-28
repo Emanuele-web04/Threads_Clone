@@ -56,7 +56,7 @@ struct UserContentListView: View {
             }
             
             LazyVStack {
-                ForEach(selectedFilter == .threads ? vm.threads : vm.currentUserLikedThreads) { thread in
+                ForEach(selectedFilter == .threads ? vm.threads : selectedFilter == .likes ? vm.currentUserLikedThreads : vm.currentUserBookmarkedThreads) { thread in
                     ThreadCell(thread: thread, user: user) { updatedPost in
                         updateLikeThread(withUpdatedPost: updatedPost)
                     } onDelete: {
@@ -66,6 +66,8 @@ struct UserContentListView: View {
                                 vm.threads.removeAll { thread.threadID == $0.threadID }
                             case .likes:
                                 vm.currentUserLikedThreads.removeAll { thread.threadID == $0.threadID }
+                            case .bookmarks:
+                                vm.currentUserBookmarkedThreads.removeAll { thread.threadID == $0.threadID }
                             }
                         }
                     }
@@ -81,6 +83,7 @@ struct UserContentListView: View {
                 thread.threadID == updatedPost.threadID
             }) {
                 vm.threads[index].likedIDs = updatedPost.likedIDs
+                vm.threads[index].bookmarkIDs = updatedPost.bookmarkIDs
             }
         case .likes:
             if let index = vm.currentUserLikedThreads.firstIndex(where: { thread in
@@ -91,6 +94,17 @@ struct UserContentListView: View {
                 if !updatedPost.likedIDs.contains(user.id) {
                     withAnimation(.spring()) {
                         vm.currentUserLikedThreads.remove(at: index)
+                    }
+                }
+            }
+        case .bookmarks:
+            if let index = vm.currentUserBookmarkedThreads.firstIndex(where: { thread in
+                thread.threadID == updatedPost.threadID
+            }) {
+                vm.currentUserBookmarkedThreads[index].bookmarkIDs = updatedPost.bookmarkIDs
+                if !updatedPost.bookmarkIDs.contains(user.id) {
+                    withAnimation(.spring()) {
+                        vm.currentUserBookmarkedThreads.remove(at: index)
                     }
                 }
             }

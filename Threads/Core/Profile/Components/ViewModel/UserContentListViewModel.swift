@@ -12,6 +12,7 @@ class UserContentListViewModel: ObservableObject {
     
     @Published var threads = [Thread]()
     @Published var currentUserLikedThreads = [Thread]()
+    @Published var currentUserBookmarkedThreads = [Thread]()
     
     let user: User
     
@@ -20,6 +21,7 @@ class UserContentListViewModel: ObservableObject {
         Task {
             try await fetchUserThreads()
             try await fetchUserLikedThreads()
+            try await fetchUserBookmarkedThreads()
         }
     }
     
@@ -43,5 +45,17 @@ class UserContentListViewModel: ObservableObject {
             allThreads[i].user = threadUser
         }
         self.currentUserLikedThreads = allThreads.filter({ $0.likedIDs.contains(user.id) })
+    }
+    
+    @MainActor
+    func fetchUserBookmarkedThreads() async throws {
+        var allThreads = try await ThreadService.fetchThreads()
+        for i in 0 ..< allThreads.count {
+            let thread = allThreads[i]
+            let ownerUid = thread.ownerUid
+            let threadUser = try await UserService.fethUser(withUid: ownerUid)
+            allThreads[i].user = threadUser
+        }
+        self.currentUserBookmarkedThreads = allThreads.filter({ $0.bookmarkIDs.contains(user.id) })
     }
 }

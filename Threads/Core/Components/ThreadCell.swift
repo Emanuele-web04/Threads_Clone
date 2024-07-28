@@ -43,7 +43,7 @@ struct ThreadCell: View {
                         if let isVerified = thread.user?.isVerified {
                             if isVerified {
                                 Image(systemName: "checkmark.seal.fill")
-                                    .foregroundStyle(.white, .xBlue).imageScale(.small)
+                                    .foregroundStyle(.xBlue).imageScale(.small)
                             }
                         }
                         Text("•").padding(.bottom, 3)
@@ -90,13 +90,10 @@ struct ThreadCell: View {
                                 try await vm.likeThread(thread)
                             }
                         } label: {
-                            HStack {
-                                if let uid = UserService.shared.currentUser?.id {
-                                        Image(systemName: thread.likedIDs.contains(uid) ? "heart.fill" : "heart").imageScale(.small)
-                                            .foregroundStyle(thread.likedIDs.contains(uid) ? .red : .gray)
-                                        Text("\(thread.likes)").font(.footnote)
-                                    }
-                                 
+                            if let uid = UserService.shared.currentUser?.id {
+                                Image(systemName: thread.likedIDs.contains(uid) ? "heart.fill" : "heart").imageScale(.small)
+                                    .foregroundStyle(thread.likedIDs.contains(uid) ? .red : .gray)
+                                Text("\(thread.likes)").font(.footnote)
                             }
                         }
                         Spacer()

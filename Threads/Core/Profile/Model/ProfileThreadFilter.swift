@@ -10,6 +10,7 @@ import Foundation
 enum ProfileThreadFilter: Int, CaseIterable, Identifiable {
     case threads
     case likes
+    case bookmarks
     
     var id: Self { return self }
     
@@ -19,6 +20,8 @@ enum ProfileThreadFilter: Int, CaseIterable, Identifiable {
             "Threads"
         case .likes:
             "Likes"
+        case .bookmarks:
+            "Bookmarks"
         }
     }
 }
